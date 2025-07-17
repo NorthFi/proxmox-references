@@ -1,0 +1,20 @@
+### List all logical volumes and find the actual volume name ###
+lvs
+# You're looking for a line like:
+  # vm-116-disk-0 pve Vwi-a-tz--  2.00g  pve/data
+    # pve is the Volume Group (VG)
+    # data is the thin pool
+    # vm-116-disk-0 is the logical volume name
+
+### Rename the volume using the actual VG name
+lvrename pve vm-116-disk-0 vm-100-disk-0
+
+### Continue with config update
+mv /etc/pve/lxc/116.conf /etc/pve/lxc/100.conf
+nano /etc/pve/lxc/100.conf
+
+# Change rootfs: local-lvm:vm-116-disk-0,size=2G to rootfs: local-lvm:vm-100-disk-0,size=2G
+
+### Then start the container:
+pct start 100
+
