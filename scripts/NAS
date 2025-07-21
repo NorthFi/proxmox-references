@@ -1,0 +1,1 @@
+mount -t nfs 172.20.66.3:/mnt/media-pool/media /mnt/lxc_shares/nas_rwx
